@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 2,
+  "dockerfileLines": [
+    "FROM python:3.9-alpine",
+    "RUN apk update && apk upgrade && apk add --no-cache make g++ bash git openssh postgresql-dev curl ca-certificates",
+    "RUN update-ca-certificates",
+    "RUN mkdir -p /usr/src/app",
+    "WORKDIR /usr/src/app",
+    "RUN pip install --upgrade pip setuptools",
+    "COPY ./django_project/ /usr/src/app",
+    "RUN pip install -r requirements.txt",
+    "COPY ./utils/ /usr/src/utils",
+    "EXPOSE 80",
+    "CMD sh /usr/src/utils/run.sh"
+  ]
+}
